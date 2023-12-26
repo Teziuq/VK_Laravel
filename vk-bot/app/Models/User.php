@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -19,7 +20,6 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
         'password',
     ];
 
@@ -39,12 +39,26 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-}
 
-User::create([
-    'name' => 'admin',
-    'password' => bcrypt('q1q1q1q1'),
-]);
+    /**
+     * Method to add a new user.
+     *
+     * @return string
+     */
+    public function addNewUser()
+    {
+        // Create a new user instance
+        $user = new User();
+
+        // Fill user attributes
+        $user->name = 'root';
+        $user->password = Hash::make('q1q1q1q1');
+
+        // Save the user to the database
+        $user->save();
+
+        return 'New user added to the database!';
+    }
+}

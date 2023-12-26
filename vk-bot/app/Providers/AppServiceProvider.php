@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Services\VkApiService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,14 +12,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
-    }
-
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        //
+        $this->app->singleton(VkApiService::class, function ($app) {
+            return new VkApiService();
+        });
     }
 }

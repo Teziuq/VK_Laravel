@@ -4,7 +4,6 @@
 
 @section('content')
     <h1>Publics</h1>
-    <a href="{{ route('publics.create') }}" class="btn btn-primary mb-3">Add Public</a>
     <table class="table">
         <thead>
             <tr>

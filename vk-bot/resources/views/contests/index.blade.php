@@ -4,7 +4,6 @@
 
 @section('content')
     <h1>Contests</h1>
-    <a href="{{ route('contests.create') }}" class="btn btn-primary mb-3">Create Contest</a>
     <table class="table">
         <thead>
             <tr>

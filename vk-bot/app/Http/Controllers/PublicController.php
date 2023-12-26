@@ -4,48 +4,68 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Contest;
+use App\Models\PublicModel;
 
 class PublicController extends Controller
 {
-    // Метод для отображения списка пабликов
     public function index()
     {
-        // Реализация логики получения и отображения пабликов
-        return view('publics.index');
+        // Получение данных о конкурсах из базы данных
+        $contests = Contest::all();
+
+        // Получение данных о пабликах из базы данных
+        $publics = PublicModel::all();
+
+        // Определение активной вкладки на основе параметра запроса 'tab'
+        $activeTab = Request::get('tab', 'contests');
+
+        // Передача данных о конкурсах, пабликах и активной вкладке в представление
+        return view('publics.index', compact('contests', 'publics', 'activeTab'));
     }
 
-    // Метод для отображения формы создания нового паблика
     public function create()
     {
-        // Реализация логики отображения формы
         return view('publics.create');
     }
 
-    // Метод для сохранения нового паблика
     public function store(Request $request)
     {
-        // Реализация логики сохранения паблика
-        return redirect()->route('publics.index')->with('success', 'Public created successfully');
+        // Валидация данных $request
+
+        $public = new PublicModel();
+        $public->vk_id = $request->input('vk_id');
+        $public->name = $request->input('name');
+        $public->token = $request->input('token');
+        $public->save();
+
+        return redirect()->route('publics.index')->with('success', 'Паблик успешно добавлен');
     }
 
-    // Метод для отображения формы редактирования паблика
     public function edit($id)
     {
-        // Реализация логики получения и отображения формы редактирования
-        return view('publics.edit');
+        $public = PublicModel::find($id);
+        return view('publics.edit', compact('public'));
     }
 
-    // Метод для обновления существующего паблика
     public function update(Request $request, $id)
     {
-        // Реализация логики обновления паблика
-        return redirect()->route('publics.index')->with('success', 'Public updated successfully');
+        // Валидация данных $request
+
+        $public = PublicModel::find($id);
+        $public->vk_id = $request->input('vk_id');
+        $public->name = $request->input('name');
+        $public->token = $request->input('token');
+        $public->save();
+
+        return redirect()->route('publics.index')->with('success', 'Паблик успешно обновлен');
     }
 
-    // Метод для удаления паблика
     public function destroy($id)
     {
-        // Реализация логики удаления паблика
-        return redirect()->route('publics.index')->with('success', 'Public deleted successfully');
+        $public = PublicModel::find($id);
+        $public->delete();
+
+        return redirect()->route('publics.index')->with('success', 'Паблик успешно удален');
     }
 }
