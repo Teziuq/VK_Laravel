@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 class LoginController extends Controller
 {
     public function login(Request $request)
@@ -22,3 +21,11 @@ class LoginController extends Controller
         ]);
     }
 }
+
+Route::post('/login', [LoginController::class, 'login']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

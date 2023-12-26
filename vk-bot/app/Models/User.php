@@ -43,3 +43,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 }
+
+User::create([
+    'name' => 'admin',
+    'password' => bcrypt('q1q1q1q1'),
+]);
