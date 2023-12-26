@@ -11,7 +11,7 @@ class DashboardController extends Controller
     public function showDashboard()
     {
         // Determine the active tab based on some logic (for example, request parameters)
-        $activeTab = request('tab', 'contests');
+        $activeTab = request('tab', 'publics');
 
         // Fetch other necessary data
         $publics = PublicModel::all(); // Adjust this line based on your actual implementation

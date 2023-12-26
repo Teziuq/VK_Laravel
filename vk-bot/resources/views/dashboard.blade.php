@@ -7,40 +7,41 @@
 
     <ul class="nav nav-tabs" id="myTabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link {{ $activeTab === 'contests' ? 'active' : '' }}" id="nav-contests-tab" data-toggle="tab" href="#nav-contests" role="tab">Contests</a>
+            <a class="nav-link {{ $activeTab === 'publics' ? 'active' : '' }}" href="#" onclick="changeTab('publics')">Publics</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ $activeTab === 'publics' ? 'active' : '' }}" id="nav-publics-tab" data-toggle="tab" href="#nav-publics" role="tab">Publics</a>
+            <a class="nav-link {{ $activeTab === 'contests' ? 'active' : '' }}" href="#" onclick="changeTab('contests')">Contests</a>
         </li>
     </ul>
 
     <div class="tab-content" id="myTabsContent">
-        <div class="tab-pane fade {{ $activeTab === 'contests' ? 'show active' : '' }}" id="nav-contests" role="tabpanel" aria-labelledby="nav-contests-tab">
-            <!-- Include contests content -->
-            @include('contests.index')
-        </div>
         <div class="tab-pane fade {{ $activeTab === 'publics' ? 'show active' : '' }}" id="nav-publics" role="tabpanel" aria-labelledby="nav-publics-tab">
             <!-- Include publics content -->
             @include('publics.index', ['publics' => $publics ?? []])
         </div>
+        <div class="tab-pane fade {{ $activeTab === 'contests' ? 'show active' : '' }}" id="nav-contests" role="tabpanel" aria-labelledby="nav-contests-tab">
+            <!-- Include contests content -->
+            @include('contests.index')
+        </div>
     </div>
 
     <script>
+        function changeTab(tab) {
+            // Update the active tab variable
+            var activeTab = (tab === 'publics') ? 'publics' : 'contests';
+
+            // Update the URL hash to remember the active tab
+            window.location.hash = activeTab;
+
+            // Show/hide the corresponding tab content
+            $('#myTabs a[href="#nav-' + activeTab + '"]').tab('show');
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
-            // Initialize Bootstrap tabs
-            var myTabs = new bootstrap.Tab(document.getElementById('{{ $activeTab === 'contests' ? 'nav-contests-tab' : 'nav-publics-tab' }}'));
-            myTabs.show();
-
-            // Handle tab switch
-            $('#myTabs a').on('shown.bs.tab', function (e) {
-                var targetTab = e.target.getAttribute('href');
-                window.location.hash = targetTab;
-            });
-
             // Load active tab based on URL hash
-            var hash = window.location.hash;
-            if (hash) {
-                $(`#myTabs a[href="${hash}"]`).tab('show');
+            var hash = window.location.hash.substring(1);
+            if (hash === 'publics' || hash === 'contests') {
+                changeTab(hash);
             }
         });
     </script>
