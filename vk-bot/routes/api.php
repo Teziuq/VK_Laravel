@@ -2,6 +2,18 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
+use Laravel\Sanctum\Http\Controllers\LoginController;
+use Laravel\Sanctum\Http\Controllers\LogoutController;
+use Laravel\Sanctum\Http\Controllers\RegisteredUserController;
+
+Route::post('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
+
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/register', [RegisteredUserController::class, 'store']);
+
+Route::middleware('auth:sanctum')->post('/logout', [LogoutController::class, 'logout']);
+
 
 /*
 |--------------------------------------------------------------------------
