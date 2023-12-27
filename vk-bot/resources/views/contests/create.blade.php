@@ -5,30 +5,39 @@
 @section('content')
     <h1>Create Contest</h1>
 
-    @if(session('success'))
-        <div class="alert alert-success" role="alert">
-            {{ session('success') }}
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
     @endif
 
-    <form action="{{ route('contests.store') }}" method="POST">
+    <form action="{{ route('contests.store') }}" method="post" enctype="multipart/form-data">
         @csrf
-        <div class="mb-3">
-            <label for="image" class="form-label">Image</label>
-            <input type="text" id="image" name="image" class="form-control" required>
+
+        <div class="form-group">
+            <label for="image">Image:</label>
+            <input type="file" name="image" class="form-control" required>
         </div>
-        <div class="mb-3">
-            <label for="text" class="form-label">Text</label>
-            <textarea id="text" name="text" class="form-control" required></textarea>
+
+        <div class="form-group">
+            <label for="text">Text:</label>
+            <textarea name="text" class="form-control" required></textarea>
         </div>
-        <div class="mb-3">
-            <label for="draw_time" class="form-label">Draw Time</label>
-            <input type="datetime-local" id="draw_time" name="draw_time" class="form-control" required>
+
+        <div class="form-group">
+            <label for="draw_time">Draw Time:</label>
+            <input type="datetime-local" name="draw_time" class="form-control" required>
         </div>
-        <div class="mb-3">
-            <label for="public_id" class="form-label">Public ID</label>
-            <input type="text" id="public_id" name="public_id" class="form-control" required>
+
+        <div class="form-group">
+            <label for="public_id">Public ID:</label>
+            <input type="text" name="public_id" class="form-control" required>
         </div>
-        <button type="submit" class="btn btn-primary">Create Contest</button>
+
+        <button type="submit" class="btn btn-primary">Create</button>
     </form>
 @endsection

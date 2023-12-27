@@ -20,6 +20,7 @@ class ContestController extends Controller
 
     public function create()
     {
+        return view('contests.create');
         // Получение данных о пабликах из базы данных
         $publics = PublicModel::all();
         return view('contests.create', compact('publics'));
@@ -27,14 +28,24 @@ class ContestController extends Controller
 
     public function store(Request $request)
     {
-        // Валидация данных $request
+        // Валидация данных
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'text' => 'required',
+            'draw_time' => 'required|date',
+            'public_id' => 'required',
+        ]);
 
-        $contest = new Contest();
-        $contest->image = $request->input('image');
-        $contest->text = $request->input('text');
-        $contest->draw_time = $request->input('draw_time');
-        $contest->public_id = $request->input('public_id');
-        $contest->save();
+        // Загрузка изображения
+        $imagePath = $request->file('image')->store('images');
+
+        // Создание новой записи в базе данных
+        ContestModel::create([
+            'image' => $imagePath,
+            'text' => $request->input('text'),
+            'draw_time' => $request->input('draw_time'),
+            'public_id' => $request->input('public_id'),
+        ]);
 
         return redirect()->route('contests.index')->with('success', 'Конкурс успешно добавлен');
     }

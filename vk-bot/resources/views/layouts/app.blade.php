@@ -46,6 +46,9 @@
             <div class="tab-pane fade {{ request()->is('publics') ? 'show active' : '' }}" id="publics" role="tabpanel">
                 @yield('publics_content') <!-- Здесь будет контент для Publics -->
             </div>
+            <div class="container">
+                @yield('content')
+            </div>
         </div>
     </div>
 

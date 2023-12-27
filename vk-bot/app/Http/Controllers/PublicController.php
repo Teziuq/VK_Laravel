@@ -25,13 +25,19 @@ class PublicController extends Controller
 
     public function store(Request $request)
     {
-        // Валидация данных $request
+        // Валидация данных
+        $request->validate([
+            'vk_id' => 'required',
+            'name' => 'required',
+            'token' => 'required',
+        ]);
 
-        $public = new PublicModel();
-        $public->vk_id = $request->input('vk_id');
-        $public->name = $request->input('name');
-        $public->token = $request->input('token');
-        $public->save();
+        // Создание новой записи в базе данных
+        PublicModel::create([
+            'vk_id' => $request->input('vk_id'),
+            'name' => $request->input('name'),
+            'token' => $request->input('token'),
+        ]);
 
         return redirect()->route('publics.index')->with('success', 'Паблик успешно добавлен');
     }

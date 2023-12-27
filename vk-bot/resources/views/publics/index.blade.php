@@ -4,6 +4,7 @@
 
 @section('publics_content')
     <h1>База пабликов</h1>
+    <a href="{{ route('publics.create') }}" class="btn btn-success mb-3">Создать</a>
     <table class="table">
         <thead>
             <tr>
