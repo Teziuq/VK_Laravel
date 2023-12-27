@@ -31,6 +31,7 @@ class PublicModel extends Model
     public function contests()
     {
         return $this->hasMany(Contest::class);
+        return $this->hasMany(ContestModel::class, 'public_id', 'id');
     }
 
     /**
@@ -48,6 +49,8 @@ class PublicModel extends Model
             // Другие необходимые поля
         ]);
     }
+
+    
 
     /**
      * Update the public in the database.

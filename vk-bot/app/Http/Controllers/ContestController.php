@@ -33,7 +33,7 @@ class ContestController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif',
             'text' => 'required',
             'draw_time' => 'required|date',
-            'public_id' => 'required',
+            'public_id' => 'required|max:255',
         ]);
 
         // Загрузка изображения
@@ -52,9 +52,9 @@ class ContestController extends Controller
 
     public function edit($id)
     {
-        $contest = Contest::find($id);
+        $contest = ContestModel::find($id);
         $publics = PublicModel::all();
-        return view('contests.edit', compact('contest', 'publics'));
+        return view('contests.edit', compact('contest'));
     }
 
     public function update(Request $request, $id)

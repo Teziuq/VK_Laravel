@@ -32,7 +32,7 @@
                     @foreach($contests as $contest)
                         <tr>
                             <td>{{ $contest->id }}</td>
-                            <td>{{ $contest->image }}</td>
+                            <td><img src="data:image/jpeg;base64,{{ base64_encode($contest->image) }}" alt="Contest Image" width="60px">{{ $contest->image }}</img></td>
                             <td>{{ $contest->text }}</td>
                             <td>{{ $contest->draw_time }}</td>
                             <td>{{ $contest->public_id }}</td>

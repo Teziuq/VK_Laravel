@@ -18,6 +18,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('contests', ContestController::class);
 
     Route::resource('publics', PublicController::class);
+    
 
 });
 

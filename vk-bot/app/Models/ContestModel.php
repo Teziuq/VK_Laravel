@@ -31,7 +31,7 @@ class ContestModel extends Model
      */
     public function public()
     {
-        return $this->belongsTo(PublicModel::class, 'public_id');
+        return $this->belongsTo(PublicModel::class, 'public_id', 'id');
     }
 
     /**
