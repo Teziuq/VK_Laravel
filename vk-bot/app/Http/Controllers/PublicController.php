@@ -4,24 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Contest;
+use App\Models\ContestModel;
 use App\Models\PublicModel;
 
 class PublicController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Получение данных о конкурсах из базы данных
-        $contests = Contest::all();
-
-        // Получение данных о пабликах из базы данных
         $publics = PublicModel::all();
+        $contests = ContestModel::all();
+        $activeTab = $request->get('tab', 'publics');
 
-        // Определение активной вкладки на основе параметра запроса 'tab'
-        $activeTab = Request::get('tab', 'contests');
-
-        // Передача данных о конкурсах, пабликах и активной вкладке в представление
-        return view('publics.index', compact('contests', 'publics', 'activeTab'));
+        return view('publics.index', compact('publics', 'contests', 'activeTab'));
     }
 
     public function create()

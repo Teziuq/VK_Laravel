@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class PublicModel extends Model
 {
-    use HasFactory;
+    protected $table = 'publics';
 
+    use HasFactory;
+    
     /**
      * The attributes that are mass assignable.
      *

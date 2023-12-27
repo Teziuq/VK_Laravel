@@ -2,8 +2,8 @@
 
 @section('title', 'Publics')
 
-@section('content')
-    <h1>Publics</h1>
+@section('publics_content')
+    <h1>База пабликов</h1>
     <table class="table">
         <thead>
             <tr>
@@ -15,7 +15,23 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Вывод данных из базы пабликов -->
+            @foreach($publics as $public)
+                <tr>
+                    <td>{{ $public->id }}</td>
+                    <td>{{ $public->vk_id }}</td>
+                    <td>{{ $public->name }}</td>
+                    <td>{{ $public->token }}</td>
+                    <td>
+                        <!-- Добавьте здесь кнопки для действий, такие как редактирование и удаление -->
+                        <a href="{{ route('publics.edit', $public->id) }}" class="btn btn-primary">Edit</a>
+                        <form action="{{ route('publics.destroy', $public->id) }}" method="POST" style="display:inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 @endsection

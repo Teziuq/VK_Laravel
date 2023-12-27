@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContestModel extends Model
 {
+    protected $table = 'contests';
+    
     use HasFactory;
 
     /**

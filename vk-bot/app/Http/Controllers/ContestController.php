@@ -4,18 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Contest;
+use App\Models\ContestModel;
 use App\Models\PublicModel;
 
 class ContestController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Получение данных о конкурсах из базы данных
-        $contests = Contest::all();
+        $contests = ContestModel::all();
+        $publics = PublicModel::all();
+        $activeTab = $request->get('tab', 'contests');
 
-        // Передача данных о конкурсах в представление
-        return view('contests.index', compact('contests'));
+        return view('contests.index', compact('publics', 'contests', 'activeTab'));
     }
 
     public function create()
